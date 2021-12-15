@@ -3,18 +3,28 @@ package ui;
 import javax.swing.JFrame;
 
 import models.Pokemon;
-import models.Tipos_Pokemon;
+import models.TiposPokemon;
 import utils.Almacen;
 import javax.swing.BoxLayout;
 import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Component;
 import java.awt.event.ActionListener;
+import java.util.Iterator;
+import java.util.ListIterator;
 import java.awt.event.ActionEvent;
+import javax.swing.JTextField;
+import java.awt.Dimension;
+import javax.swing.JDesktopPane;
+import java.awt.SystemColor;
 
 public class Pokedex {
 	private int position = 0, positionBack, positionFront;
+	private boolean opcTipo;
+	private Pokemon actualizar, crear = new Pokemon(-1, null, null, null, -1, -1, null, null, true);
 
 	private JFrame frmPokedex;
 	private JFrame parent;
@@ -75,33 +85,65 @@ public class Pokedex {
 	private final Component hsSub_3 = Box.createHorizontalStrut(40);
 	private final JButton btnBorrar = new JButton("Borrar");
 	private final Component hgSub_2 = Box.createHorizontalGlue();
-	private final JButton btnConocer = new JButton("Conocer");
-	private final JButton btnOlvidar = new JButton("Olvidar");
+	private final JButton btnBloqueado = new JButton();
 	private final Component hsSub_2 = Box.createHorizontalStrut(40);
 	private final Component hsSub_1 = Box.createHorizontalStrut(40);
+	private final JTextField textAltura = new JTextField();
+	private final JTextField textCategoria = new JTextField();
+	private final JTextField textPeso = new JTextField();
+	private final JTextField textHabilidad = new JTextField();
+	private final JTextField textNombre = new JTextField();
+	private final JTextField textNumero = new JTextField();
+	private final JLabel lblNombreEspacio = new JLabel("   Nº ");
+	private final JButton btnTipo1 = new JButton("Ninguno");
+	private final JButton btnTipo2 = new JButton("Ninguno");
+	private final JDesktopPane selTipo = new JDesktopPane();
+	private final JButton btnAgua = new JButton("Agua");
+	private final JButton btnElectrico = new JButton("Electrico");
+	private final JButton btnPlanta = new JButton("Planta");
+	private final JButton btnHielo = new JButton("Hielo");
+	private final JButton btnLucha = new JButton("Lucha");
+	private final JButton btnVeneno = new JButton("Veneno");
+	private final JButton btnTierra = new JButton("Tierra");
+	private final JButton btnVolador = new JButton("Volador");
+	private final JButton btnPsiquico = new JButton("Psíquico");
+	private final JButton btnBicho = new JButton("Bicho");
+	private final JButton btnRoca = new JButton("Roca");
+	private final JButton btnFantasma = new JButton("Fantasma");
+	private final JButton btnDragon = new JButton("Dragón");
+	private final JButton btnSinTipo = new JButton("Ninguno");
+	private final JButton btnHada = new JButton("Hada");
+	private final JButton btnAcero = new JButton("Acero");
+	private final JButton btnSiniestro = new JButton("Siniestro");
+	private final JButton btnSendActu = new JButton("Actualizar");
+	private final JButton btnCancelar = new JButton("Cancelar");
+	private final JButton btnSendCrear = new JButton("Crear");
+	private final Box hbActualizar = Box.createHorizontalBox();
+	JButton btnFuego = new JButton("Fuego");
+	JButton btnNormal = new JButton("Normal");
 
 	/**
 	 * Create the application.
 	 */
 	public Pokedex(JFrame parent) {
-		Almacen.pokemons.add(new Pokemon(1, "Bulbasaur", Tipos_Pokemon.Planta, Tipos_Pokemon.Veneno, 0.7, 6.9,
-				"Espesura", "Semilla", true));
-		Almacen.pokemons.add(new Pokemon(2, "Ivysaur", Tipos_Pokemon.Planta, Tipos_Pokemon.Veneno, 1, 13, "Espesura",
+		Almacen.pokemons.add(new Pokemon(1, "Bulbasaur", TiposPokemon.Planta, TiposPokemon.Veneno, 0.7, 6.9, "Espesura",
+				"Semilla", true));
+		Almacen.pokemons.add(new Pokemon(2, "Ivysaur", TiposPokemon.Planta, TiposPokemon.Veneno, 1, 13, "Espesura",
 				"Semilla", false));
-		Almacen.pokemons.add(new Pokemon(3, "Venusaur", Tipos_Pokemon.Planta, Tipos_Pokemon.Veneno, 2, 100, "Espesura",
+		Almacen.pokemons.add(new Pokemon(3, "Venusaur", TiposPokemon.Planta, TiposPokemon.Veneno, 2, 100, "Espesura",
 				"Semilla", false));
-		Almacen.pokemons.add(new Pokemon(4, "Charmander", Tipos_Pokemon.Fuego, Tipos_Pokemon.Ninguno, 0.6, 8.5,
+		Almacen.pokemons.add(new Pokemon(4, "Charmander", TiposPokemon.Fuego, TiposPokemon.Ninguno, 0.6, 8.5,
 				"Mar Llamas", "Lagartija", true));
-		Almacen.pokemons.add(new Pokemon(5, "Charmeleon", Tipos_Pokemon.Fuego, Tipos_Pokemon.Ninguno, 1.1, 19,
+		Almacen.pokemons.add(new Pokemon(5, "Charmeleon", TiposPokemon.Fuego, TiposPokemon.Ninguno, 1.1, 19,
 				"Mar Llamas", "LLama", false));
-		Almacen.pokemons.add(new Pokemon(6, "Charizard", Tipos_Pokemon.Fuego, Tipos_Pokemon.Volador, 1.7, 90.5,
+		Almacen.pokemons.add(new Pokemon(6, "Charizard", TiposPokemon.Fuego, TiposPokemon.Volador, 1.7, 90.5,
 				"Mar Llamas", "Lagartija", false));
-		Almacen.pokemons.add(new Pokemon(7, "Squirtle", Tipos_Pokemon.Agua, Tipos_Pokemon.Ninguno, 0.5, 9, "Torrente",
+		Almacen.pokemons.add(new Pokemon(7, "Squirtle", TiposPokemon.Agua, TiposPokemon.Ninguno, 0.5, 9, "Torrente",
 				"Tortuguita", true));
-		Almacen.pokemons.add(new Pokemon(8, "Wartortle", Tipos_Pokemon.Agua, Tipos_Pokemon.Ninguno, 1, 22.5, "Torrente",
+		Almacen.pokemons.add(new Pokemon(8, "Wartortle", TiposPokemon.Agua, TiposPokemon.Ninguno, 1, 22.5, "Torrente",
 				"Tortuga", false));
-		Almacen.pokemons.add(new Pokemon(9, "Blastoise", Tipos_Pokemon.Agua, Tipos_Pokemon.Ninguno, 1.6, 85.5,
-				"Torrente", "Armazón", false));
+		Almacen.pokemons.add(new Pokemon(9, "Blastoise", TiposPokemon.Agua, TiposPokemon.Ninguno, 1.6, 85.5, "Torrente",
+				"Armazón", false));
 		this.positionBack = Almacen.pokemons.size() - 1;
 		this.positionFront = position + 1;
 		this.parent = parent;
@@ -112,6 +154,12 @@ public class Pokedex {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		textNombre.setVisible(false);
+		textNombre.setMaximumSize(new Dimension(100, 200));
+		textNombre.setColumns(10);
+		textAltura.setMaximumSize(new Dimension(100, 200));
+		textAltura.setVisible(false);
+		textAltura.setColumns(10);
 		this.parent.setVisible(false);
 		frmPokedex = new JFrame();
 		frmPokedex.setTitle("Pokedex");
@@ -145,7 +193,16 @@ public class Pokedex {
 
 		hbNombre.add(lblNombre);
 
+		hbNombre.add(textNombre);
+
+		hbNombre.add(lblNombreEspacio);
+
 		hbNombre.add(lblNumero);
+		textNumero.setVisible(false);
+		textNumero.setMaximumSize(new Dimension(100, 200));
+		textNumero.setColumns(10);
+
+		hbNombre.add(textNumero);
 
 		vbMid.add(vsMid_1);
 
@@ -161,6 +218,8 @@ public class Pokedex {
 
 		vbAltura.add(lblAltura);
 
+		vbAltura.add(textAltura);
+
 		hbAlturaCategoria.add(lblAltCatEspacio);
 
 		hbAlturaCategoria.add(vbCategoria);
@@ -170,6 +229,11 @@ public class Pokedex {
 		vbCategoria.add(lblCategoriaEspacio);
 
 		vbCategoria.add(lblCategoria);
+		textCategoria.setVisible(false);
+		textCategoria.setMaximumSize(new Dimension(100, 200));
+		textCategoria.setColumns(10);
+
+		vbCategoria.add(textCategoria);
 
 		vbStats.add(lblStatsEspacio_1);
 
@@ -184,6 +248,11 @@ public class Pokedex {
 		vbPeso.add(lblPesoEspacio);
 
 		vbPeso.add(lblPeso);
+		textPeso.setVisible(false);
+		textPeso.setMaximumSize(new Dimension(100, 200));
+		textPeso.setColumns(10);
+
+		vbPeso.add(textPeso);
 
 		hbPesoHabilidad.add(lblPesHabEspacio);
 
@@ -194,6 +263,11 @@ public class Pokedex {
 		vbHabilidad.add(lblHabEspacio);
 
 		vbHabilidad.add(lblHabilidad);
+		textHabilidad.setVisible(false);
+		textHabilidad.setMaximumSize(new Dimension(100, 200));
+		textHabilidad.setColumns(10);
+
+		vbHabilidad.add(textHabilidad);
 
 		vbStats.add(lblStatsEspacio_3);
 
@@ -213,30 +287,107 @@ public class Pokedex {
 		vbTipo.add(hbTipo);
 
 		hbTipo.add(lblTipo1);
+		btnTipo1.setVisible(false);
+
+		hbTipo.add(btnTipo1);
+		selTipo.setVisible(false);
+		selTipo.setBackground(SystemColor.window);
+		selTipo.setMaximumSize(new Dimension(530, 100000));
+
+		hbTipo.add(selTipo);
+		selTipo.setLayout(null);
+
+		btnFuego.setBounds(12, 49, 117, 25);
+		selTipo.add(btnFuego);
+
+		btnNormal.setBounds(12, 12, 117, 25);
+		selTipo.add(btnNormal);
+		btnAgua.setBounds(12, 86, 117, 25);
+
+		selTipo.add(btnAgua);
+		btnElectrico.setBounds(12, 123, 117, 25);
+
+		selTipo.add(btnElectrico);
+		btnPlanta.setBounds(12, 160, 117, 25);
+
+		selTipo.add(btnPlanta);
+		btnHielo.setBounds(12, 197, 117, 25);
+
+		selTipo.add(btnHielo);
+		btnLucha.setBounds(141, 12, 117, 25);
+
+		selTipo.add(btnLucha);
+		btnVeneno.setBounds(141, 49, 117, 25);
+
+		selTipo.add(btnVeneno);
+		btnTierra.setBounds(141, 86, 117, 25);
+
+		selTipo.add(btnTierra);
+		btnVolador.setBounds(141, 123, 117, 25);
+
+		selTipo.add(btnVolador);
+		btnPsiquico.setBounds(141, 160, 117, 25);
+
+		selTipo.add(btnPsiquico);
+		btnBicho.setBounds(141, 197, 117, 25);
+
+		selTipo.add(btnBicho);
+		btnRoca.setBounds(270, 12, 117, 25);
+
+		selTipo.add(btnRoca);
+		btnFantasma.setBounds(270, 49, 117, 25);
+
+		selTipo.add(btnFantasma);
+		btnDragon.setBounds(270, 86, 117, 25);
+
+		selTipo.add(btnDragon);
+		btnSinTipo.setVisible(false);
+		btnSinTipo.setBounds(399, 104, 117, 25);
+
+		selTipo.add(btnSinTipo);
+		btnHada.setBounds(270, 123, 117, 25);
+
+		selTipo.add(btnHada);
+		btnAcero.setBounds(270, 160, 117, 25);
+
+		selTipo.add(btnAcero);
+		btnSiniestro.setBounds(270, 197, 117, 25);
+
+		selTipo.add(btnSiniestro);
 
 		hbTipo.add(lblTiposEspacio_1);
 
 		hbTipo.add(lblTipo2);
+		btnTipo2.setVisible(false);
+
+		hbTipo.add(btnTipo2);
 
 		frmPokedex.getContentPane().add(vgPokedex_2);
 
 		frmPokedex.getContentPane().add(hbSub);
 
 		hbSub.add(hgSub_1);
-		
-		hbSub.add(btnConocer);
-		
-		hbSub.add(btnOlvidar);
-		
+
+		hbSub.add(btnBloqueado);
+
 		hbSub.add(hsSub_1);
 
 		hbSub.add(btnCrear);
-		
+		btnSendCrear.setVisible(false);
+
+		hbSub.add(btnSendCrear);
+
 		hbSub.add(hsSub_2);
 
-		hbSub.add(btnActualizar);
+		hbSub.add(hbActualizar);
+		hbActualizar.add(btnActualizar);
+		hbActualizar.add(btnSendActu);
+		hbActualizar.add(hsSub_3);
 
-		hbSub.add(hsSub_3);
+		btnSendActu.setVisible(false);
+		btnCancelar.setVisible(false);
+
+		hbSub.add(btnCancelar);
 
 		hbSub.add(btnBorrar);
 
@@ -264,6 +415,9 @@ public class Pokedex {
 						positionFront++;
 					}
 				}
+				if (Almacen.pokemons.size() == 1) {
+					positionFront = positionBack = position;
+				}
 				updateText();
 			}
 		});
@@ -287,59 +441,601 @@ public class Pokedex {
 						positionFront--;
 					}
 				}
+				if (Almacen.pokemons.size() == 1) {
+					positionFront = positionBack = position;
+				}
+				updateText();
+			}
+		});
+
+		btnBloqueado.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (Almacen.pokemons.get(position).isConocido())
+					Almacen.pokemons.get(position).setConocido(false);
+				else
+					Almacen.pokemons.get(position).setConocido(true);
+
+				updateText();
+			}
+		});
+
+		btnCrear.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				lblNombre.setVisible(false);
+				lblNumero.setVisible(false);
+				lblAltura.setVisible(false);
+				lblHabilidad.setVisible(false);
+				lblPeso.setVisible(false);
+				lblCategoria.setVisible(false);
+				lblTipo1.setVisible(false);
+				lblTipo2.setVisible(false);
+				btnActualizar.setVisible(false);
+				btnBloqueado.setVisible(false);
+				btnCrear.setVisible(false);
+				btnSendActu.setVisible(false);
+				btnBorrar.setVisible(false);
+				btnPkmnAnterior.setVisible(false);
+				btnPkmnSiguiente.setVisible(false);
+
+				hbTop_Top.setVisible(true);
+				hbTop_Sub.setVisible(true);
+				vbMid.setVisible(true);
+				textNombre.setVisible(true);
+				textNumero.setVisible(true);
+				textAltura.setVisible(true);
+				textHabilidad.setVisible(true);
+				textPeso.setVisible(true);
+				textCategoria.setVisible(true);
+				btnTipo1.setVisible(true);
+				btnTipo2.setVisible(true);
+				btnSendCrear.setVisible(true);
+				btnCancelar.setVisible(true);
+			}
+		});
+
+		btnSendCrear.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (!textNumero.getText().isBlank() && !textNombre.getText().isBlank()
+						&& !btnTipo1.getText().equals("Ninguno") && !textAltura.getText().isBlank()
+						&& !textPeso.getText().isBlank() && !textCategoria.getText().isBlank()
+						&& !textHabilidad.getText().isBlank()) {
+
+					boolean posible = true;
+
+					for (Pokemon comprobar : Almacen.pokemons) {
+						if (comprobar.getNombre().equals(textNombre.getText())) {
+							posible = false;
+						}
+					}
+
+					if (posible) {
+						crear.setNombre(textNombre.getText());
+					} else {
+						JFrame imposible = new JFrame();
+						JOptionPane.showMessageDialog(imposible, "No se puede cambiar.\nNombre ya ocupado");
+					}
+
+					crear.setTipo1(TiposPokemon.valueOf(btnTipo1.getText()));
+
+					if (!btnTipo2.getText().equals("Ninguno")) {
+						crear.setTipo2(TiposPokemon.valueOf(btnTipo2.getText()));
+					} else {
+						crear.setTipo2(TiposPokemon.Ninguno);
+					}
+
+					crear.setAltura(Double.parseDouble(textAltura.getText()));
+
+					crear.setPeso(Double.parseDouble(textPeso.getText()));
+
+					crear.setCategoria(textCategoria.getText());
+
+					crear.setHabilidad(textHabilidad.getText());
+
+					textNombre.setVisible(false);
+					textNumero.setVisible(false);
+					textAltura.setVisible(false);
+					textHabilidad.setVisible(false);
+					textPeso.setVisible(false);
+					textCategoria.setVisible(false);
+					btnTipo1.setVisible(false);
+					btnTipo2.setVisible(false);
+					btnSendCrear.setVisible(false);
+					btnCancelar.setVisible(false);
+					selTipo.setVisible(false);
+					btnSinTipo.setVisible(false);
+
+					lblNombre.setVisible(true);
+					lblNumero.setVisible(true);
+					lblAltura.setVisible(true);
+					lblHabilidad.setVisible(true);
+					lblPeso.setVisible(true);
+					lblCategoria.setVisible(true);
+					lblTipo1.setVisible(true);
+					lblTipo2.setVisible(true);
+					btnActualizar.setVisible(true);
+					btnBloqueado.setVisible(true);
+					btnCrear.setVisible(true);
+					btnBorrar.setVisible(true);
+					btnPkmnAnterior.setVisible(true);
+					btnPkmnSiguiente.setVisible(true);
+
+					boolean posibleNum = true;
+
+					for (Pokemon comprobar : Almacen.pokemons) {
+						if (comprobar.getNumeroPokedex() == Double.parseDouble(textNumero.getText())) {
+							posible = false;
+						}
+					}
+
+					if (posibleNum) {
+						boolean actualizado = false;
+						int i = 0;
+						crear.setNumeroPokedex(Integer.parseInt(textNumero.getText()));
+
+						while (!actualizado) {
+							if (i == 0) {
+								if (crear.getNumeroPokedex() < Almacen.pokemons.get(i).getNumeroPokedex()) {
+									Almacen.pokemons.add(0, crear);
+									actualizado = true;
+								}
+							} else if (i == Almacen.pokemons.size() - 1) {
+								Almacen.pokemons.add(crear);
+								actualizado = true;
+							} else {
+								for (int j = 0; j < Almacen.pokemons.size(); j++) {
+									if (j != 0 && j != Almacen.pokemons.size() - 1) {
+										if (Almacen.pokemons.get(j - 1).getNumeroPokedex() < crear.getNumeroPokedex()
+												&& Almacen.pokemons.get(j + 1).getNumeroPokedex() > crear
+														.getNumeroPokedex()) {
+											Almacen.pokemons.add(j, crear);
+											actualizado = true;
+										}
+									}
+								}
+
+							}
+							i++;
+						}
+						i = 0;
+					} else {
+						JFrame imposible = new JFrame();
+						JOptionPane.showMessageDialog(imposible, "No se puede cambiar.\nNumero ya ocupado");
+					}
+
+					textNombre.setText("");
+					textNumero.setText("");
+					textAltura.setText("");
+					textHabilidad.setText("");
+					textPeso.setText("");
+					textCategoria.setText("");
+					btnTipo1.setText("Ninguno");
+					btnTipo2.setText("Ninguno");
+
+					System.out.println(crear);
+
+					if (crear.getPosition(crear) == 0) {
+						position = 0;
+						positionBack = Almacen.pokemons.size() - 1;
+						positionFront = 1;
+					} else if (crear.getPosition(crear) == Almacen.pokemons.size() - 1) {
+						position = Almacen.pokemons.size() - 1;
+						positionBack = Almacen.pokemons.size() - 2;
+						positionFront = 0;
+					} else {
+						position = crear.getPosition(crear);
+						positionBack = Almacen.pokemons.size() - 1
+								- (Almacen.pokemons.size() - crear.getPosition(crear));
+						positionFront = position + 1;
+					}
+					updateText();
+				} else {
+					JFrame error = new JFrame();
+					JOptionPane.showMessageDialog(error, "Todos los campos son necesarios");
+				}
+			}
+		});
+
+		btnActualizar.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				lblNombre.setVisible(false);
+				lblAltura.setVisible(false);
+				lblHabilidad.setVisible(false);
+				lblPeso.setVisible(false);
+				lblCategoria.setVisible(false);
+				lblTipo1.setVisible(false);
+				lblTipo2.setVisible(false);
+				btnActualizar.setVisible(false);
+				btnBloqueado.setVisible(false);
+				btnCrear.setVisible(false);
+				btnSendCrear.setVisible(false);
+				btnBorrar.setVisible(false);
+				btnPkmnAnterior.setVisible(false);
+				btnPkmnSiguiente.setVisible(false);
+
+				btnTipo1.setText(Almacen.pokemons.get(position).getTipo1());
+				btnTipo2.setText(Almacen.pokemons.get(position).getTipo2());
+
+				textNombre.setVisible(true);
+				textAltura.setVisible(true);
+				textHabilidad.setVisible(true);
+				textPeso.setVisible(true);
+				textCategoria.setVisible(true);
+				btnTipo1.setVisible(true);
+				btnTipo2.setVisible(true);
+				btnSendActu.setVisible(true);
+				btnCancelar.setVisible(true);
+
+			}
+		});
+
+		btnSendActu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (!textNombre.getText().isBlank()) {
+					boolean posible = true;
+
+					for (Pokemon comprobar : Almacen.pokemons) {
+						if (comprobar.getNombre().equals(textNombre.getText())) {
+							posible = false;
+						}
+					}
+
+					if (posible) {
+						Almacen.pokemons.get(position).setNombre(textNombre.getText());
+					} else {
+						JFrame imposible = new JFrame();
+						JOptionPane.showMessageDialog(imposible, "No se puede cambiar.\nNombre ya ocupado");
+					}
+
+				}
+
+				if (!btnTipo1.getText().equals("Ninguno")) {
+					Almacen.pokemons.get(position).setTipo1(TiposPokemon.valueOf(btnTipo1.getText()));
+				}
+
+				if (!btnTipo2.getText().equals("Ninguno")) {
+					Almacen.pokemons.get(position).setTipo2(TiposPokemon.valueOf(btnTipo2.getText()));
+				}
+
+				if (!textAltura.getText().isBlank()) {
+					Almacen.pokemons.get(position).setAltura(Double.parseDouble(textAltura.getText()));
+				}
+
+				if (!textPeso.getText().isBlank()) {
+					Almacen.pokemons.get(position).setPeso(Double.parseDouble(textPeso.getText()));
+
+				}
+
+				if (!textCategoria.getText().isBlank()) {
+					Almacen.pokemons.get(position).setCategoria(textCategoria.getText());
+				}
+
+				if (!textHabilidad.getText().isBlank()) {
+					Almacen.pokemons.get(position).setHabilidad(textHabilidad.getText());
+				}
+
+				textNombre.setVisible(false);
+				textNumero.setVisible(false);
+				textAltura.setVisible(false);
+				textHabilidad.setVisible(false);
+				textPeso.setVisible(false);
+				textCategoria.setVisible(false);
+				btnTipo1.setVisible(false);
+				btnTipo2.setVisible(false);
+				btnSendActu.setVisible(false);
+				btnCancelar.setVisible(false);
+				selTipo.setVisible(false);
+				btnSinTipo.setVisible(false);
+
+				lblNombre.setVisible(true);
+				lblNumero.setVisible(true);
+				lblAltura.setVisible(true);
+				lblHabilidad.setVisible(true);
+				lblPeso.setVisible(true);
+				lblCategoria.setVisible(true);
+				lblTipo1.setVisible(true);
+				lblTipo2.setVisible(true);
+				btnActualizar.setVisible(true);
+				btnBloqueado.setVisible(true);
+				btnCrear.setVisible(true);
+				btnBorrar.setVisible(true);
+				btnPkmnAnterior.setVisible(true);
+				btnPkmnSiguiente.setVisible(true);
+
+				textNombre.setText("");
+				textNumero.setText("");
+				textAltura.setText("");
+				textHabilidad.setText("");
+				textPeso.setText("");
+				textCategoria.setText("");
+				btnTipo1.setText("Ninguno");
+				btnTipo2.setText("Ninguno");
+
+				updateText();
+			}
+		});
+
+		btnCancelar.addActionListener(new ActionListener() {
+
+			public void actionPerformed(ActionEvent e) {
+				textNombre.setVisible(false);
+				textNumero.setVisible(false);
+				textAltura.setVisible(false);
+				textHabilidad.setVisible(false);
+				textPeso.setVisible(false);
+				textCategoria.setVisible(false);
+				btnTipo1.setVisible(false);
+				btnTipo2.setVisible(false);
+				btnSendActu.setVisible(false);
+				btnCancelar.setVisible(false);
+				selTipo.setVisible(false);
+				btnSinTipo.setVisible(false);
+
+				if (Almacen.pokemons.size() == 0) {
+					btnCrear.setVisible(true);
+
+					hbTop_Top.setVisible(false);
+					hbTop_Sub.setVisible(false);
+					vbMid.setVisible(false);
+					btnBloqueado.setVisible(false);
+					btnActualizar.setVisible(false);
+					btnBorrar.setVisible(false);
+					btnSendCrear.setVisible(false);
+					btnCancelar.setVisible(false);
+				} else {
+					lblNombre.setVisible(true);
+					lblNumero.setVisible(true);
+					lblAltura.setVisible(true);
+					lblHabilidad.setVisible(true);
+					lblPeso.setVisible(true);
+					lblCategoria.setVisible(true);
+					lblTipo1.setVisible(true);
+					lblTipo2.setVisible(true);
+					btnActualizar.setVisible(true);
+					btnBloqueado.setVisible(true);
+					btnCrear.setVisible(true);
+					btnBorrar.setVisible(true);
+					btnPkmnAnterior.setVisible(true);
+					btnPkmnSiguiente.setVisible(true);
+				}
+
+				textNombre.setText("");
+				textNumero.setText("");
+				textAltura.setText("");
+				textHabilidad.setText("");
+				textPeso.setText("");
+				textCategoria.setText("");
+			}
+		});
+
+		btnTipo1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				opcTipo = false;
+				btnTipo1.setVisible(false);
+				btnTipo2.setVisible(false);
+				selTipo.setVisible(true);
+				btnSinTipo.setVisible(false);
+			}
+		});
+
+		btnTipo2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				opcTipo = true;
+				btnTipo1.setVisible(false);
+				btnTipo2.setVisible(false);
+				selTipo.setVisible(true);
+				btnSinTipo.setVisible(true);
+			}
+		});
+
+		// ########## Botones tipo pokemon ##########
+		btnNormal.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				updateTipo(TiposPokemon.Normal);
+			}
+		});
+		btnFuego.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				updateTipo(TiposPokemon.Fuego);
+			}
+		});
+		btnAgua.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				updateTipo(TiposPokemon.Agua);
+			}
+		});
+		btnElectrico.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				updateTipo(TiposPokemon.Electrico);
+			}
+		});
+		btnPlanta.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				updateTipo(TiposPokemon.Planta);
+			}
+		});
+		btnHielo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				updateTipo(TiposPokemon.Hielo);
+			}
+		});
+		btnLucha.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				updateTipo(TiposPokemon.Lucha);
+			}
+		});
+		btnVeneno.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				updateTipo(TiposPokemon.Veneno);
+			}
+		});
+		btnTierra.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				updateTipo(TiposPokemon.Tierra);
+			}
+		});
+		btnVolador.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				updateTipo(TiposPokemon.Volador);
+			}
+		});
+		btnPsiquico.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				updateTipo(TiposPokemon.Psiquico);
+			}
+		});
+		btnBicho.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				updateTipo(TiposPokemon.Bicho);
+			}
+		});
+		btnRoca.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				updateTipo(TiposPokemon.Roca);
+			}
+		});
+		btnFantasma.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				updateTipo(TiposPokemon.Fantasma);
+			}
+		});
+		btnDragon.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				updateTipo(TiposPokemon.Dragon);
+			}
+		});
+		btnHada.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				updateTipo(TiposPokemon.Hada);
+			}
+		});
+		btnAcero.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				updateTipo(TiposPokemon.Acero);
+			}
+		});
+		btnSiniestro.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				updateTipo(TiposPokemon.Siniestro);
+			}
+		});
+		btnSinTipo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				updateTipo(TiposPokemon.Ninguno);
+			}
+		});
+		// ############################################
+
+		btnBorrar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ListIterator<Pokemon> reordenar = Almacen.pokemons.listIterator();
+				actualizar = Almacen.pokemons.get(position);
+				while (reordenar.hasNext()) {
+					if (reordenar.next().getNumeroPokedex() == actualizar.getNumeroPokedex()) {
+						reordenar.remove();
+					}
+				}
+				if (position > Almacen.pokemons.size() - 1) {
+					position = Almacen.pokemons.size() - 1;
+					positionBack = Almacen.pokemons.size() - 2;
+					positionFront = 0;
+				}
+				if (positionBack > Almacen.pokemons.size() - 1) {
+					positionBack = Almacen.pokemons.size() - 1;
+				}
+				positionFront = position + 1;
+				if (positionFront > Almacen.pokemons.size() - 1) {
+					positionFront = 0;
+				}
+
+				if (Almacen.pokemons.size() == 1) {
+					positionFront = positionBack = position;
+				}
+
 				updateText();
 			}
 		});
 	}
 
-	public void updateText() {
-		if (Almacen.pokemons.get(positionBack).isConocido())
-			btnPkmnAnterior.setText("<   " + Almacen.pokemons.get(positionBack).getNumeroPokedex() + " "
-					+ Almacen.pokemons.get(positionBack).getNombre());
-		else
-			btnPkmnAnterior.setText("<   " + Almacen.pokemons.get(positionBack).getNumeroPokedex() + " ?????????");
-
-		if (Almacen.pokemons.get(position).isConocido()) {
-			lblPkmnActual.setText(Almacen.pokemons.get(position).getNombre());
-			lblAltura.setText(Double.toString(Almacen.pokemons.get(position).getAltura()));
-			lblNombre.setText(Almacen.pokemons.get(position).getNombre());
-			lblNumero.setText("   Nº " + Almacen.pokemons.get(position).getNumeroPokedex());
-			lblCategoria.setText(Almacen.pokemons.get(position).getCategoria());
-			lblPeso.setText(Double.toString(Almacen.pokemons.get(position).getPeso()));
-			lblHabilidad.setText(Almacen.pokemons.get(position).getHabilidad());
-
-			lblTipo1.setText(Almacen.pokemons.get(position).getTipo1());
-			if (!Almacen.pokemons.get(position).getTipo2().equals("Ninguno"))
-				lblTipo2.setText(Almacen.pokemons.get(position).getTipo2());
-			else
-				lblTipo2.setText("");
-			
-			btnConocer.setVisible(false);
-			btnOlvidar.setVisible(true);
+	public void updateTipo(TiposPokemon tipo) {
+		if (opcTipo) {
+			btnTipo2.setText(tipo.name());
 		} else {
-			lblPkmnActual.setText("?????????");
-			lblAltura.setText("?????????");
-			lblNombre.setText("?????????");
-			lblNumero.setText("   Nº " + Almacen.pokemons.get(position).getNumeroPokedex());
-			lblCategoria.setText("?????????");
-			lblPeso.setText("?????????");
-			lblHabilidad.setText("?????????");
-
-			lblTipo1.setText("?????????");
-			if (!Almacen.pokemons.get(position).getTipo2().equals("Ninguno"))
-				lblTipo2.setText("?????????");
-			else
-				lblTipo2.setText("");
-			
-			btnConocer.setVisible(true);
-			btnOlvidar.setVisible(false);
+			btnTipo1.setText(tipo.name());
 		}
 
-		if (Almacen.pokemons.get(positionFront).isConocido())
-			btnPkmnSiguiente.setText(Almacen.pokemons.get(positionFront).getNumeroPokedex() + " "
-					+ Almacen.pokemons.get(positionFront).getNombre() + "   >");
-		else
-			btnPkmnSiguiente.setText(Almacen.pokemons.get(positionFront).getNumeroPokedex() + " ?????????   >");
+		selTipo.setVisible(false);
+		btnTipo1.setVisible(true);
+		btnTipo2.setVisible(true);
+	}
 
+	public void updateText() {
+
+		if (Almacen.pokemons.size() == 0) {
+			hbTop_Top.setVisible(false);
+			hbTop_Sub.setVisible(false);
+			vbMid.setVisible(false);
+			btnBloqueado.setVisible(false);
+			btnActualizar.setVisible(false);
+			btnBorrar.setVisible(false);
+		} else {
+			hbTop_Top.setVisible(true);
+			hbTop_Sub.setVisible(true);
+			vbMid.setVisible(true);
+			btnBloqueado.setVisible(true);
+			btnActualizar.setVisible(true);
+			btnBorrar.setVisible(true);
+			if (Almacen.pokemons.get(positionBack).isConocido())
+				btnPkmnAnterior.setText("<   " + Almacen.pokemons.get(positionBack).getNumeroPokedex() + " "
+						+ Almacen.pokemons.get(positionBack).getNombre());
+			else
+				btnPkmnAnterior.setText("<   " + Almacen.pokemons.get(positionBack).getNumeroPokedex() + " ?????????");
+
+			if (Almacen.pokemons.get(position).isConocido()) {
+				lblPkmnActual.setText(Almacen.pokemons.get(position).getNombre());
+				lblAltura.setText(Double.toString(Almacen.pokemons.get(position).getAltura()));
+				lblNombre.setText(Almacen.pokemons.get(position).getNombre());
+				lblNumero.setText(Integer.toString(Almacen.pokemons.get(position).getNumeroPokedex()));
+				lblCategoria.setText(Almacen.pokemons.get(position).getCategoria());
+				lblPeso.setText(Double.toString(Almacen.pokemons.get(position).getPeso()));
+				lblHabilidad.setText(Almacen.pokemons.get(position).getHabilidad());
+
+				lblTipo1.setText(Almacen.pokemons.get(position).getTipo1());
+				if (!Almacen.pokemons.get(position).getTipo2().equals("Ninguno"))
+					lblTipo2.setText(Almacen.pokemons.get(position).getTipo2());
+				else
+					lblTipo2.setText("");
+
+				btnBloqueado.setText("Olvidar");
+				btnActualizar.setVisible(true);
+				hbActualizar.setVisible(true);
+				btnBorrar.setVisible(true);
+			} else {
+				lblPkmnActual.setText("?????????");
+				lblAltura.setText("?????????");
+				lblNombre.setText("?????????");
+				lblNumero.setText(Integer.toString(Almacen.pokemons.get(position).getNumeroPokedex()));
+				lblCategoria.setText("?????????");
+				lblPeso.setText("?????????");
+				lblHabilidad.setText("?????????");
+
+				lblTipo1.setText("?????????");
+				if (!Almacen.pokemons.get(position).getTipo2().equals("Ninguno"))
+					lblTipo2.setText("?????????");
+				else
+					lblTipo2.setText("");
+
+				btnBloqueado.setText("Descubrir");
+				btnActualizar.setVisible(false);
+				hbActualizar.setVisible(false);
+				btnBorrar.setVisible(false);
+			}
+
+			if (Almacen.pokemons.get(positionFront).isConocido())
+				btnPkmnSiguiente.setText(Almacen.pokemons.get(positionFront).getNumeroPokedex() + " "
+						+ Almacen.pokemons.get(positionFront).getNombre() + "   >");
+			else
+				btnPkmnSiguiente.setText(Almacen.pokemons.get(positionFront).getNumeroPokedex() + " ?????????   >");
+		}
 	}
 }

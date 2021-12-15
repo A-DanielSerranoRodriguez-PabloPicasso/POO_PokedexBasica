@@ -1,15 +1,17 @@
 package models;
 
+import utils.Almacen;
+
 public class Pokemon {
-	private Tipos_Pokemon tipo1, tipo2;
+	private TiposPokemon tipo1, tipo2;
 	private String nombre, categoria, habilidad;
 	private int numeroPokedex;
 	private double altura, peso;
 	private boolean conocido;
 
 	// Const
-	public Pokemon(int numeroPokedex, String nombre, Tipos_Pokemon tipo1, Tipos_Pokemon tipo2, double altura,
-			double peso, String habilidad, String categoria, boolean conocido) {
+	public Pokemon(int numeroPokedex, String nombre, TiposPokemon tipo1, TiposPokemon tipo2, double altura, double peso,
+			String habilidad, String categoria, boolean conocido) {
 		super();
 		this.tipo1 = tipo1;
 		this.tipo2 = tipo2;
@@ -27,15 +29,15 @@ public class Pokemon {
 		return tipo1.name();
 	}
 
-	public void setTipo1(Tipos_Pokemon tipo1) {
+	public void setTipo1(TiposPokemon tipo1) {
 		this.tipo1 = tipo1;
 	}
-	
+
 	public String getTipo2() {
 		return this.tipo2.name();
 	}
 
-	public void setTipo2(Tipos_Pokemon tipo2) {
+	public void setTipo2(TiposPokemon tipo2) {
 		this.tipo2 = tipo2;
 	}
 
@@ -86,7 +88,7 @@ public class Pokemon {
 	public void setPeso(double peso) {
 		this.peso = peso;
 	}
-	
+
 	public boolean isConocido() {
 		return conocido;
 	}
@@ -94,8 +96,37 @@ public class Pokemon {
 	public void setConocido(boolean conocido) {
 		this.conocido = conocido;
 	}
-	// Methods
 
+	// Methods
+	public void actualizar(int numeroPokedex, String nombre, TiposPokemon tipo1, TiposPokemon tipo2, double altura,
+			double peso, String habilidad, String categoria) {
+		this.numeroPokedex = numeroPokedex;
+		this.nombre = nombre;
+		this.tipo1 = tipo1;
+		this.tipo2 = tipo2;
+		this.categoria = categoria;
+		this.habilidad = habilidad;
+		this.numeroPokedex = numeroPokedex;
+		this.altura = altura;
+		this.peso = peso;
+		this.conocido = true;
+	}
+
+	/**
+	 * Devuelve la posicion del pokemon en el ArrayList.
+	 * 
+	 * @param pokemon Objeto 'Pokemon' del que queremos conseguir la posicion.
+	 * @return Entero que representa la posicion. Si es -1, el pokemon no esta en el
+	 *         ArrayList.
+	 */
+	public int getPosition(Pokemon pokemon) {
+		for (int i = 0; i < Almacen.pokemons.size(); i++) {
+			if (Almacen.pokemons.get(i).getNumeroPokedex() == pokemon.getNumeroPokedex()) {
+				return i;
+			}
+		}
+		return -1;
+	}
 
 	// toString
 	@Override
