@@ -18,7 +18,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import models.Usuario;
-import utils.Almacen;
 
 public class Menu {
 
@@ -124,7 +123,6 @@ public class Menu {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
-		Almacen.usuarios.add(new Usuario("dani", "dani"));
 		frmInicioDeSesin = new JFrame();
 		frmInicioDeSesin.setTitle("Inicio de sesión");
 		frmInicioDeSesin.setBounds(100, 100, 600, 450);
