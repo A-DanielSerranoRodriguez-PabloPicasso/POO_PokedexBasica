@@ -1,25 +1,29 @@
 package ui;
 
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Image;
+import java.awt.SystemColor;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
+import java.net.URL;
+import java.util.ListIterator;
+
+import javax.imageio.ImageIO;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JDesktopPane;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
 import models.Pokemon;
 import models.TiposPokemon;
 import utils.Almacen;
-import javax.swing.BoxLayout;
-import javax.swing.Box;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-
-import java.awt.Component;
-import java.awt.event.ActionListener;
-import java.util.ArrayList;
-import java.util.ListIterator;
-import java.awt.event.ActionEvent;
-import javax.swing.JTextField;
-import java.awt.Dimension;
-import javax.swing.JDesktopPane;
-import java.awt.SystemColor;
 
 public class Pokedex {
 	private int position = 0, positionBack, positionFront;
@@ -119,6 +123,9 @@ public class Pokedex {
 	private final Box hbActualizar = Box.createHorizontalBox();
 	JButton btnFuego = new JButton("Fuego");
 	JButton btnNormal = new JButton("Normal");
+	private final JLabel lblImg = new JLabel("");
+	private final Box hbMid = Box.createHorizontalBox();
+	private final Component horizontalStrut = Box.createHorizontalStrut(80);
 
 	/**
 	 * Create the application.
@@ -162,181 +169,184 @@ public class Pokedex {
 		hbTop.add(btnPkmnSiguiente);
 
 		frmPokedex.getContentPane().add(vgPokedex_1);
-
-		frmPokedex.getContentPane().add(vbMid);
-
-		vbMid.add(hbNombre);
-
-		hbNombre.add(lblNombre);
-
-		hbNombre.add(textNombre);
-
-		hbNombre.add(lblNombreEspacio);
-
-		hbNombre.add(lblNumero);
-		textNumero.setVisible(false);
-		textNumero.setMaximumSize(new Dimension(100, 200));
-		textNumero.setColumns(10);
-
-		hbNombre.add(textNumero);
-
-		vbMid.add(vsMid_1);
-
-		vbMid.add(vbStats);
-
-		vbStats.add(hbAlturaCategoria);
-
-		hbAlturaCategoria.add(vbAltura);
-
-		vbAltura.add(lblTxtAltura);
-
-		vbAltura.add(lblAlturaEspacio);
-
-		vbAltura.add(lblAltura);
-
-		vbAltura.add(textAltura);
-
-		hbAlturaCategoria.add(lblAltCatEspacio);
-
-		hbAlturaCategoria.add(vbCategoria);
-
-		vbCategoria.add(lblTxtCategoria);
-
-		vbCategoria.add(lblCategoriaEspacio);
-
-		vbCategoria.add(lblCategoria);
-		textCategoria.setVisible(false);
-		textCategoria.setMaximumSize(new Dimension(100, 200));
-		textCategoria.setColumns(10);
-
-		vbCategoria.add(textCategoria);
-
-		vbStats.add(lblStatsEspacio_1);
-
-		vbStats.add(lblStatsEspacio_2);
-
-		vbStats.add(hbPesoHabilidad);
-
-		hbPesoHabilidad.add(vbPeso);
-
-		vbPeso.add(lblTxtPeso);
-
-		vbPeso.add(lblPesoEspacio);
-
-		vbPeso.add(lblPeso);
-		textPeso.setVisible(false);
-		textPeso.setMaximumSize(new Dimension(100, 200));
-		textPeso.setColumns(10);
-
-		vbPeso.add(textPeso);
-
-		hbPesoHabilidad.add(lblPesHabEspacio);
-
-		hbPesoHabilidad.add(vbHabilidad);
-
-		vbHabilidad.add(lblTxtHabilidad);
-
-		vbHabilidad.add(lblHabEspacio);
-
-		vbHabilidad.add(lblHabilidad);
-		textHabilidad.setVisible(false);
-		textHabilidad.setMaximumSize(new Dimension(100, 200));
-		textHabilidad.setColumns(10);
-
-		vbHabilidad.add(textHabilidad);
-
-		vbStats.add(lblStatsEspacio_3);
-
-		vbStats.add(lblStatsEspacio_4);
-
-		vbStats.add(hbTipos);
-
-		hbTipos.add(vbTipo);
-
-		vbTipo.add(hbTxtTipo);
-		hbTxtTipo.add(lblTxtTipo);
-
-		hbTxtTipo.add(lblTxtTipoEspacio);
-
-		vbTipo.add(lblTipoEspacio);
-
-		vbTipo.add(hbTipo);
-
-		hbTipo.add(lblTipo1);
-		btnTipo1.setVisible(false);
-
-		hbTipo.add(btnTipo1);
-		selTipo.setVisible(false);
-		selTipo.setBackground(SystemColor.window);
-		selTipo.setMaximumSize(new Dimension(530, 100000));
-
-		hbTipo.add(selTipo);
-		selTipo.setLayout(null);
-
-		btnFuego.setBounds(12, 49, 117, 25);
-		selTipo.add(btnFuego);
-
-		btnNormal.setBounds(12, 12, 117, 25);
-		selTipo.add(btnNormal);
-		btnAgua.setBounds(12, 86, 117, 25);
-
-		selTipo.add(btnAgua);
-		btnElectrico.setBounds(12, 123, 117, 25);
-
-		selTipo.add(btnElectrico);
-		btnPlanta.setBounds(12, 160, 117, 25);
-
-		selTipo.add(btnPlanta);
-		btnHielo.setBounds(12, 197, 117, 25);
-
-		selTipo.add(btnHielo);
-		btnLucha.setBounds(141, 12, 117, 25);
-
-		selTipo.add(btnLucha);
-		btnVeneno.setBounds(141, 49, 117, 25);
-
-		selTipo.add(btnVeneno);
-		btnTierra.setBounds(141, 86, 117, 25);
-
-		selTipo.add(btnTierra);
-		btnVolador.setBounds(141, 123, 117, 25);
-
-		selTipo.add(btnVolador);
-		btnPsiquico.setBounds(141, 160, 117, 25);
-
-		selTipo.add(btnPsiquico);
-		btnBicho.setBounds(141, 197, 117, 25);
-
-		selTipo.add(btnBicho);
-		btnRoca.setBounds(270, 12, 117, 25);
-
-		selTipo.add(btnRoca);
-		btnFantasma.setBounds(270, 49, 117, 25);
-
-		selTipo.add(btnFantasma);
-		btnDragon.setBounds(270, 86, 117, 25);
-
-		selTipo.add(btnDragon);
-		btnSinTipo.setVisible(false);
-		btnSinTipo.setBounds(399, 104, 117, 25);
-
-		selTipo.add(btnSinTipo);
-		btnHada.setBounds(270, 123, 117, 25);
-
-		selTipo.add(btnHada);
-		btnAcero.setBounds(270, 160, 117, 25);
-
-		selTipo.add(btnAcero);
-		btnSiniestro.setBounds(270, 197, 117, 25);
-
-		selTipo.add(btnSiniestro);
-
-		hbTipo.add(lblTiposEspacio_1);
-
-		hbTipo.add(lblTipo2);
-		btnTipo2.setVisible(false);
-
-		hbTipo.add(btnTipo2);
+		
+		frmPokedex.getContentPane().add(hbMid);
+		hbMid.add(horizontalStrut);
+		hbMid.add(lblImg);
+		hbMid.add(vbMid);
+		
+				vbMid.add(hbNombre);
+				
+						hbNombre.add(lblNombre);
+						
+								hbNombre.add(textNombre);
+								
+										hbNombre.add(lblNombreEspacio);
+										
+												hbNombre.add(lblNumero);
+												textNumero.setVisible(false);
+												textNumero.setMaximumSize(new Dimension(100, 200));
+												textNumero.setColumns(10);
+												
+														hbNombre.add(textNumero);
+														
+																vbMid.add(vsMid_1);
+																
+																		vbMid.add(vbStats);
+																		
+																				vbStats.add(hbAlturaCategoria);
+																				
+																						hbAlturaCategoria.add(vbAltura);
+																						
+																								vbAltura.add(lblTxtAltura);
+																								
+																										vbAltura.add(lblAlturaEspacio);
+																										
+																												vbAltura.add(lblAltura);
+																												
+																														vbAltura.add(textAltura);
+																														
+																																hbAlturaCategoria.add(lblAltCatEspacio);
+																																
+																																		hbAlturaCategoria.add(vbCategoria);
+																																		
+																																				vbCategoria.add(lblTxtCategoria);
+																																				
+																																						vbCategoria.add(lblCategoriaEspacio);
+																																						
+																																								vbCategoria.add(lblCategoria);
+																																								textCategoria.setVisible(false);
+																																								textCategoria.setMaximumSize(new Dimension(100, 200));
+																																								textCategoria.setColumns(10);
+																																								
+																																										vbCategoria.add(textCategoria);
+																																										
+																																												vbStats.add(lblStatsEspacio_1);
+																																												
+																																														vbStats.add(lblStatsEspacio_2);
+																																														
+																																																vbStats.add(hbPesoHabilidad);
+																																																
+																																																		hbPesoHabilidad.add(vbPeso);
+																																																		
+																																																				vbPeso.add(lblTxtPeso);
+																																																				
+																																																						vbPeso.add(lblPesoEspacio);
+																																																						
+																																																								vbPeso.add(lblPeso);
+																																																								textPeso.setVisible(false);
+																																																								textPeso.setMaximumSize(new Dimension(100, 200));
+																																																								textPeso.setColumns(10);
+																																																								
+																																																										vbPeso.add(textPeso);
+																																																										
+																																																												hbPesoHabilidad.add(lblPesHabEspacio);
+																																																												
+																																																														hbPesoHabilidad.add(vbHabilidad);
+																																																														
+																																																																vbHabilidad.add(lblTxtHabilidad);
+																																																																
+																																																																		vbHabilidad.add(lblHabEspacio);
+																																																																		
+																																																																				vbHabilidad.add(lblHabilidad);
+																																																																				textHabilidad.setVisible(false);
+																																																																				textHabilidad.setMaximumSize(new Dimension(100, 200));
+																																																																				textHabilidad.setColumns(10);
+																																																																				
+																																																																						vbHabilidad.add(textHabilidad);
+																																																																						
+																																																																								vbStats.add(lblStatsEspacio_3);
+																																																																								
+																																																																										vbStats.add(lblStatsEspacio_4);
+																																																																										
+																																																																												vbStats.add(hbTipos);
+																																																																												
+																																																																														hbTipos.add(vbTipo);
+																																																																														
+																																																																																vbTipo.add(hbTxtTipo);
+																																																																																hbTxtTipo.add(lblTxtTipo);
+																																																																																
+																																																																																		hbTxtTipo.add(lblTxtTipoEspacio);
+																																																																																		
+																																																																																				vbTipo.add(lblTipoEspacio);
+																																																																																				
+																																																																																						vbTipo.add(hbTipo);
+																																																																																						
+																																																																																								hbTipo.add(lblTipo1);
+																																																																																								btnTipo1.setVisible(false);
+																																																																																								
+																																																																																										hbTipo.add(btnTipo1);
+																																																																																										selTipo.setVisible(false);
+																																																																																										selTipo.setBackground(SystemColor.window);
+																																																																																										selTipo.setMaximumSize(new Dimension(530, 100000));
+																																																																																										
+																																																																																												hbTipo.add(selTipo);
+																																																																																												selTipo.setLayout(null);
+																																																																																												
+																																																																																														btnFuego.setBounds(12, 49, 117, 25);
+																																																																																														selTipo.add(btnFuego);
+																																																																																														
+																																																																																																btnNormal.setBounds(12, 12, 117, 25);
+																																																																																																selTipo.add(btnNormal);
+																																																																																																btnAgua.setBounds(12, 86, 117, 25);
+																																																																																																
+																																																																																																		selTipo.add(btnAgua);
+																																																																																																		btnElectrico.setBounds(12, 123, 117, 25);
+																																																																																																		
+																																																																																																				selTipo.add(btnElectrico);
+																																																																																																				btnPlanta.setBounds(12, 160, 117, 25);
+																																																																																																				
+																																																																																																						selTipo.add(btnPlanta);
+																																																																																																						btnHielo.setBounds(12, 197, 117, 25);
+																																																																																																						
+																																																																																																								selTipo.add(btnHielo);
+																																																																																																								btnLucha.setBounds(141, 12, 117, 25);
+																																																																																																								
+																																																																																																										selTipo.add(btnLucha);
+																																																																																																										btnVeneno.setBounds(141, 49, 117, 25);
+																																																																																																										
+																																																																																																												selTipo.add(btnVeneno);
+																																																																																																												btnTierra.setBounds(141, 86, 117, 25);
+																																																																																																												
+																																																																																																														selTipo.add(btnTierra);
+																																																																																																														btnVolador.setBounds(141, 123, 117, 25);
+																																																																																																														
+																																																																																																																selTipo.add(btnVolador);
+																																																																																																																btnPsiquico.setBounds(141, 160, 117, 25);
+																																																																																																																
+																																																																																																																		selTipo.add(btnPsiquico);
+																																																																																																																		btnBicho.setBounds(141, 197, 117, 25);
+																																																																																																																		
+																																																																																																																				selTipo.add(btnBicho);
+																																																																																																																				btnRoca.setBounds(270, 12, 117, 25);
+																																																																																																																				
+																																																																																																																						selTipo.add(btnRoca);
+																																																																																																																						btnFantasma.setBounds(270, 49, 117, 25);
+																																																																																																																						
+																																																																																																																								selTipo.add(btnFantasma);
+																																																																																																																								btnDragon.setBounds(270, 86, 117, 25);
+																																																																																																																								
+																																																																																																																										selTipo.add(btnDragon);
+																																																																																																																										btnSinTipo.setVisible(false);
+																																																																																																																										btnSinTipo.setBounds(399, 104, 117, 25);
+																																																																																																																										
+																																																																																																																												selTipo.add(btnSinTipo);
+																																																																																																																												btnHada.setBounds(270, 123, 117, 25);
+																																																																																																																												
+																																																																																																																														selTipo.add(btnHada);
+																																																																																																																														btnAcero.setBounds(270, 160, 117, 25);
+																																																																																																																														
+																																																																																																																																selTipo.add(btnAcero);
+																																																																																																																																btnSiniestro.setBounds(270, 197, 117, 25);
+																																																																																																																																
+																																																																																																																																		selTipo.add(btnSiniestro);
+																																																																																																																																		
+																																																																																																																																				hbTipo.add(lblTiposEspacio_1);
+																																																																																																																																				
+																																																																																																																																						hbTipo.add(lblTipo2);
+																																																																																																																																						btnTipo2.setVisible(false);
+																																																																																																																																						
+																																																																																																																																								hbTipo.add(btnTipo2);
 
 		frmPokedex.getContentPane().add(vgPokedex_2);
 
@@ -452,6 +462,7 @@ public class Pokedex {
 				btnBorrar.setVisible(false);
 				btnPkmnAnterior.setVisible(false);
 				btnPkmnSiguiente.setVisible(false);
+				lblImg.setIcon(null);
 
 				hbTop.setVisible(true);
 				vbMid.setVisible(true);
@@ -600,8 +611,6 @@ public class Pokedex {
 							JOptionPane.showMessageDialog(imposible, "No se puede cambiar.\nNumero ya ocupado");
 							textNumero.setText("");
 						}
-
-						System.out.println(crear);
 
 						if (crear.getPosition(crear) == 0) {
 							position = 0;
@@ -977,6 +986,8 @@ public class Pokedex {
 
 		if (Almacen.pokemons.size() == 0) {
 			hbTop.setVisible(false);
+			hbMid.setVisible(false);
+			lblImg.setVisible(false);
 			vbMid.setVisible(false);
 			btnBloqueado.setVisible(false);
 			btnActualizar.setVisible(false);
@@ -991,6 +1002,8 @@ public class Pokedex {
 				btnPkmnAnterior.setVisible(true);
 				btnPkmnSiguiente.setVisible(true);
 			}
+			hbMid.setVisible(true);
+			lblImg.setVisible(true);
 			vbMid.setVisible(true);
 			btnBloqueado.setVisible(true);
 			btnActualizar.setVisible(true);
@@ -1002,6 +1015,34 @@ public class Pokedex {
 				btnPkmnAnterior.setText("<   " + Almacen.pokemons.get(positionBack).getNumeroPokedex() + " ?????????");
 
 			if (Almacen.pokemons.get(position).isConocido()) {
+				Image image;
+					
+				if(Almacen.pokemons.get(position).getNumeroPokedex()<10) {
+					try {
+						URL url = new URL("https://assets.pokemon.com/assets/cms2/img/pokedex/full/00"+Almacen.pokemons.get(position).getNumeroPokedex()+".png");
+						image = ImageIO.read(url);
+						lblImg.setIcon(new ImageIcon(image));
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				} else if(Almacen.pokemons.get(position).getNumeroPokedex()<100) {
+					try {
+						URL url = new URL("https://assets.pokemon.com/assets/cms2/img/pokedex/full/0"+Almacen.pokemons.get(position).getNumeroPokedex()+".png");
+						image = ImageIO.read(url);
+						lblImg.setIcon(new ImageIcon(image));
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				} else {
+					try {
+						URL url = new URL("https://assets.pokemon.com/assets/cms2/img/pokedex/full/"+Almacen.pokemons.get(position).getNumeroPokedex()+".png");
+						image = ImageIO.read(url);
+						lblImg.setIcon(new ImageIcon(image));
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+				
 				lblPkmnActual.setText(Almacen.pokemons.get(position).getNombre());
 				lblAltura.setText(Double.toString(Almacen.pokemons.get(position).getAltura()));
 				lblNombre.setText(Almacen.pokemons.get(position).getNombre());
@@ -1016,11 +1057,14 @@ public class Pokedex {
 				else
 					lblTipo2.setText("");
 
+				lblImg.setText("");
 				btnBloqueado.setText("Olvidar");
 				btnActualizar.setVisible(true);
 				hbActualizar.setVisible(true);
 				btnBorrar.setVisible(true);
 			} else {
+				lblImg.setText("?????????");
+				lblImg.setIcon(null);
 				lblPkmnActual.setText("?????????");
 				lblAltura.setText("?????????");
 				lblNombre.setText("?????????");
