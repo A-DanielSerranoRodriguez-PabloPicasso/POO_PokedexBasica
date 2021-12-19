@@ -30,10 +30,7 @@ public class Usuario {
 			if (usuario.nombre.equals(registrado.nombre))
 				if (usuario.passwd.equals(registrado.passwd))
 					return true;
-				else
-					return false;
-			else
-				return false;
+
 		}
 		return false;
 	}

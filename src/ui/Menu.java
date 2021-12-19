@@ -18,6 +18,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import models.Usuario;
+import javax.swing.JPasswordField;
 
 public class Menu {
 
@@ -61,7 +62,6 @@ public class Menu {
 	private Component hsPasswd_login_1;
 	private Box vbPasswd_login;
 	private Component vsPasswd_login_1;
-	private JTextField tfPasswdLogin;
 	private Component vsPasswd_login_2;
 	private Component hgPasswd_login_2;
 	private Box hbOptions_login;
@@ -89,7 +89,6 @@ public class Menu {
 	private Component hsPasswd_register_1;
 	private Box vbPasswd_register;
 	private Component vsPasswd_register_1;
-	private JTextField tfPasswdRegister;
 	private Component vsPasswd_register_2;
 	private Component hgPasswd_register_2;
 	private Component vgRegister_3;
@@ -106,10 +105,12 @@ public class Menu {
 	private Component hsChkPasswd_register_1;
 	private Box vbChkPasswd_register;
 	private Component vsChkPasswd_register_1;
-	private JTextField tfChkPasswdRegister;
 	private Component vsChkPasswd_register_2;
 	private Component hgChkPasswd_register_2;
 	private Component vgRegister_4;
+	private JPasswordField pfPasswdLogin;
+	private JPasswordField pfPasswdRegister;
+	private JPasswordField pfChkPasswdRegister;
 
 	/**
 	 * Create the application.
@@ -260,10 +261,10 @@ public class Menu {
 		vsPasswd_login_1 = Box.createVerticalStrut(20);
 		vbPasswd_login.add(vsPasswd_login_1);
 
-		tfPasswdLogin = new JTextField();
-		tfPasswdLogin.setMaximumSize(new Dimension(400, 50));
-		tfPasswdLogin.setColumns(10);
-		vbPasswd_login.add(tfPasswdLogin);
+		pfPasswdLogin = new JPasswordField();
+		pfPasswdLogin.setMaximumSize(new Dimension(400, 50));
+		pfPasswdLogin.setColumns(10);
+		vbPasswd_login.add(pfPasswdLogin);
 
 		vsPasswd_login_2 = Box.createVerticalStrut(20);
 		vbPasswd_login.add(vsPasswd_login_2);
@@ -354,10 +355,9 @@ public class Menu {
 		vsPasswd_register_1 = Box.createVerticalStrut(20);
 		vbPasswd_register.add(vsPasswd_register_1);
 
-		tfPasswdRegister = new JTextField();
-		tfPasswdRegister.setMaximumSize(new Dimension(400, 50));
-		tfPasswdRegister.setColumns(10);
-		vbPasswd_register.add(tfPasswdRegister);
+		pfPasswdRegister = new JPasswordField();
+		pfPasswdRegister.setMaximumSize(new Dimension(400, 50));
+		vbPasswd_register.add(pfPasswdRegister);
 
 		vsPasswd_register_2 = Box.createVerticalStrut(20);
 		vbPasswd_register.add(vsPasswd_register_2);
@@ -387,10 +387,9 @@ public class Menu {
 		vsChkPasswd_register_1 = Box.createVerticalStrut(20);
 		vbChkPasswd_register.add(vsChkPasswd_register_1);
 
-		tfChkPasswdRegister = new JTextField();
-		tfChkPasswdRegister.setMaximumSize(new Dimension(400, 50));
-		tfChkPasswdRegister.setColumns(10);
-		vbChkPasswd_register.add(tfChkPasswdRegister);
+		pfChkPasswdRegister = new JPasswordField();
+		pfChkPasswdRegister.setMaximumSize(new Dimension(400, 50));
+		vbChkPasswd_register.add(pfChkPasswdRegister);
 
 		vsChkPasswd_register_2 = Box.createVerticalStrut(20);
 		vbChkPasswd_register.add(vsChkPasswd_register_2);
@@ -449,7 +448,11 @@ public class Menu {
 		btnLoginLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JFrame entrar = new JFrame();
-				String user = tfUsernameLogin.getText(), passwd = tfPasswdLogin.getText();
+				char[] passwdArray = pfPasswdLogin.getPassword();
+				String user = tfUsernameLogin.getText(), passwd = "";
+				for (int i = 0; i < passwdArray.length; i++) {
+					passwd += passwdArray[i];
+				}
 				Usuario usuario = new Usuario(user, passwd);
 
 				if (usuario.entrar(usuario)) {
@@ -480,8 +483,14 @@ public class Menu {
 		btnRegisterRegister.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JFrame registro = new JFrame();
-				String user = tfUsernameRegister.getText(), passwd = tfPasswdRegister.getText(),
-						chkPasswd = tfChkPasswdRegister.getText();
+				char[] passwdArray = pfPasswdRegister.getPassword(), chkPasswdArray = pfChkPasswdRegister.getPassword();
+				String user = tfUsernameRegister.getText(), passwd = "", chkPasswd = "";
+				for (int i = 0; i < passwdArray.length; i++) {
+					passwd += passwdArray[i];
+				}
+				for (int i = 0; i < chkPasswdArray.length; i++) {
+					chkPasswd += chkPasswdArray[i];
+				}
 
 				if (passwd.equals(chkPasswd)) {
 					Usuario usuario = new Usuario(user, passwd);
