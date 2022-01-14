@@ -2,3 +2,4 @@
 *.log
 Test*
 test*
+/target
